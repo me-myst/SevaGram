@@ -4,6 +4,10 @@ import { AuthProvider } from "./context/AuthContext";
 import NavigationBar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import Services from "./pages/Services";
+import BookService from "./pages/BookService";
+import MyBookings from "./pages/MyBookings";
+import ProviderDashboard from "./pages/ProviderDashboard"; // ADD THIS
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -19,6 +23,17 @@ function App() {
           <main className="flex-grow-1">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/services" element={<Services />} />
+              <Route
+                path="/book-service/:serviceId"
+                element={<BookService />}
+              />
+              <Route path="/my-bookings" element={<MyBookings />} />
+              <Route
+                path="/provider-dashboard"
+                element={<ProviderDashboard />}
+              />{" "}
+              {/* ADD THIS */}
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />

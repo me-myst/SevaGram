@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const NavigationBar = () => {
@@ -9,14 +9,14 @@ const NavigationBar = () => {
 
   const handleLogout = () => {
     logoutUser();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
-    <Navbar bg="success" variant="dark" expand="lg" sticky="top">
+    <Navbar bg="success" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <strong>🌾 SevaGram</strong>
+          🌾 SevaGram
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -27,22 +27,38 @@ const NavigationBar = () => {
             <Nav.Link as={Link} to="/services">
               Services
             </Nav.Link>
-
             {user ? (
               <>
+                {/* ADD THIS SECTION - Provider Dashboard Link */}
+                {user?.role === "provider" && (
+                  <Nav.Link as={Link} to="/provider-dashboard">
+                    Provider Dashboard
+                  </Nav.Link>
+                )}
+                {user?.role === "admin" && (
+                  <Nav.Link as={Link} to="/admin">
+                    Admin Panel
+                  </Nav.Link>
+                )}
+                {/* END OF ADDED SECTION */}
+
+                {/* Customer-specific links */}
+                {user?.role === "customer" && (
+                  <Nav.Link as={Link} to="/my-bookings">
+                    My Bookings
+                  </Nav.Link>
+                )}
+
                 <Nav.Link as={Link} to="/dashboard">
                   Dashboard
-                </Nav.Link>
-                <Nav.Link as={Link} to="/bookings">
-                  My Bookings
                 </Nav.Link>
                 <Button
                   variant="outline-light"
                   size="sm"
-                  className="ms-2"
                   onClick={handleLogout}
+                  className="ms-2"
                 >
-                  Logout ({user.name})
+                  Logout
                 </Button>
               </>
             ) : (
@@ -51,9 +67,7 @@ const NavigationBar = () => {
                   Login
                 </Nav.Link>
                 <Nav.Link as={Link} to="/register">
-                  <Button variant="light" size="sm">
-                    Register
-                  </Button>
+                  Register
                 </Nav.Link>
               </>
             )}
